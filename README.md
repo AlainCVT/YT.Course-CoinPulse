@@ -49,4 +49,4 @@ CoinPulse was designed to provide a simple and intuitive way to track the crypto
 
 ## Credits
 
-https://www.youtube.com/watch?v=-vsh_GxC-vg
+[Crypto Trading Terminal Course | Build a Real-Time Dashboard with WebSockets & Next.js](https://www.youtube.com/watch?v=-vsh_GxC-vg)
