@@ -1,12 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
 import { fetcher } from "@/lib/coingecko.actions";
-import { cn, formatCurrency, formatPercentage, trendingClasses } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import DataTable from "@/components/DataTable";
 import CoinsPagination from "@/components/coins/CoinsPagination";
 
 const COUNT_PER_PAGE = 10;
+
+export const metadata: Metadata = {
+  title: "Cryptocurrency Prices",
+  description:
+    "Browse cryptocurrency prices by market capitalization. Compare live prices, 24-hour changes, and market caps for the leading digital assets.",
+  openGraph: {
+    title: "Cryptocurrency Prices | CoinPulse",
+    description:
+      "Compare live cryptocurrency prices, 24-hour changes, and market caps for the leading digital assets.",
+  },
+};
 
 const COINS_MARKETS_COLUMNS_BASE = {
   rank: {

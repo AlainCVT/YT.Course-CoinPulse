@@ -1,10 +1,48 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import type { Metadata } from "next";
 
 import { fetcher, getPools } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
 import Converter from "@/components/Converter";
+
+export async function generateMetadata({ params }: NextPageProps): Promise<Metadata> {
+  const { id } = await params;
+
+  try {
+    const coin = await fetcher<CoinDetailsData>(`/coins/${id}`, {
+      dex_pair_format: "symbol",
+    });
+    const name = `${coin.name} (${coin.symbol.toUpperCase()}) Price`;
+    const description = `Follow the live ${coin.name} (${coin.symbol.toUpperCase()}) price, market cap, trading volume, and price chart on CoinPulse.`;
+
+    return {
+      title: name,
+      description,
+      openGraph: {
+        title: `${name} | CoinPulse`,
+        description,
+        images: [coin.image.large],
+      },
+      twitter: {
+        card: "summary",
+        title: `${name} | CoinPulse`,
+        description,
+        images: [coin.image.large],
+      },
+    };
+  } catch (error) {
+    console.error(
+      `Error generating metadata for coin ${id}:`,
+      error instanceof Error ? error.message : error,
+    );
+    return {
+      title: `${id} Price`,
+      description: `View cryptocurrency market data and price information for ${id} on CoinPulse.`,
+    };
+  }
+}
 
 export default async function CoinID({ params }: NextPageProps) {
   const { id } = await params;
